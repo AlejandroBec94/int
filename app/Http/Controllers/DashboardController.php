@@ -97,8 +97,234 @@ class DashboardController extends Controller
         //
     }
 
+
+    function aes_encrypt($String = "")
+    {
+
+        $plaintext = $String;
+        $password = '}H70 #w3hz+64.b';
+        $method = 'aes-256-cbc';
+
+        $password = substr(hash('sha256', $password, true), 0, 32);
+
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+
+        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
+
+        return $encrypted;
+
+    }
+
     public function getDashboard()
     {
+
+        $Dash = DB::select('SELECT * FROM dashboard_users WHERE UserID = ? LIMIT 1', [Auth::user()->UserID]);
+        $Dash = (array)$Dash[0];
+        $Dashboard = json_decode($Dash['UserDashboardSorted']);
+        $Dashboard = (array)$Dashboard;
+//        print_r($Dashboard);exit;
+        if (isset($Dashboard['Left'])) {
+            $DashLeft = $Dashboard['Left'];
+        } else {
+            $DashLeft = "";
+        }
+        if (isset($Dashboard['Right'])) {
+            $DashRight = $Dashboard['Right'];
+        } else {
+            $DashRight = "";
+        }
+
+        $now = date("Y-m-d");
+        $NikkenNew = NikkenNew::all()
+            ->where("Cancelled", 0)
+            ->where('ExpireDate', '>=', $now);
+
+        $Events = NikkenCalendar::all()->where("EventStatus", "2")->sortBy('EventDateStart')->toArray();
+
+        $CalendarEvent = [];
+
+        foreach ($Events as $event) {
+            $CalendarEvent[] = $event['EventDateStart'];
+        }
+
+        $YoutubeVideos = $this->get_videos();
+
+        return view("index", [
+            'Dash' => $Dash,
+            'DashLeft' => $DashLeft,
+            'DashRight' => $DashRight,
+            "News" => $NikkenNew,
+            "Events" => $CalendarEvent,
+            "EventsInfo" => $Events,
+            "YoutubeVideos" => $YoutubeVideos
+        ]);
+
+    }
+
+    public function sortDash(Request $request)
+    {
+
+        if (DashboardUser::where('UserID', Auth::user()->UserID)->exists()) {
+
+            DB::table('dashboard_users')
+                ->where('UserID', Auth::user()->UserID)
+                ->update([
+
+                    'UserDashboardSorted' => json_encode($request['Data']),
+                    'LastUpdate' => date('Y-m-d H:i:s'),
+
+                ]);
+
+        } else {
+            // dashboard_users
+            DB::table('dashboard_users')
+                ->insert([
+                    'UserID' => Auth::user()->UserID,
+                    'UserDashboardSorted' => json_encode($request['Data']),
+                ]);
+
+        }
+
+        return $request->all();
+
+    }
+
+    public function usersBirthday(Request $request)
+    {
+
+        $file_name = "UsersBirthDay";
+
+        $file = $request->file('FileBirthdayInput');
+
+        $name = $file_name . ".jpg";
+        file_put_contents(public_path() . "/img/" . $name, file_get_contents($file));
+
+    }
+
+    function get_videos()
+    {
+
+        $playlists = Youtube::getPlaylistsByChannelId('UCMhexgYvMGrrlmH-Xx4TlgA');
+
+        $API_Url = 'https://www.googleapis.com/youtube/v3/';
+        $API_Key = 'AIzaSyDgf_GlwBTqfy2iCQy1uJlfeJ-VYn1YzGw';
+
+        // If you don't know the channel ID see below
+        $channelId = 'UCMhexgYvMGrrlmH-Xx4TlgA';
+
+        $parameter = [
+            'id' => $channelId,
+            'part' => 'contentDetails',
+            'key' => $API_Key
+        ];
+        $channel_URL = $API_Url . 'channels?' . http_build_query($parameter);
+        $json_details = json_decode(file_get_contents($channel_URL), true);
+
+        $playlist = $json_details['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
+
+        $parameter = [
+            'part' => 'snippet',
+            'playlistId' => $playlist,
+            'maxResults' => '3',
+            'key' => $API_Key
+        ];
+        $channel_URL = $API_Url . 'playlistItems?' . http_build_query($parameter);
+        $json_details = json_decode(file_get_contents($channel_URL), true);
+
+        $my_videos = [];
+        foreach ($json_details['items'] as $video) {
+            //$my_videos[] = $video['snippet']['resourceId']['videoId'];
+            $my_videos[] = array('v_id' => $video['snippet']['resourceId']['videoId'], 'v_name' => $video['snippet']['title']);
+        }
+
+        return $my_videos;
+
+    }
+
+    public function _getDashboard()
+    {
+
+        /*
+            Camara_Col=Col  (CO)
+            Camara_Mex=Mex  (MX)
+            Camara_Pan=Pan  (PAN)
+            Camara_Ecu=Ecu  (ECU)
+            Camara_Gtm=Gtm  (GTM)
+            Camara_Cri=Cri  (CRI)
+            Camara_Slv=Slv  (SAL)
+            Camara_Per=Per  (PR)
+            Recordatorios =Recordatorios (no)
+            Noticias =Noticias (News)
+            Usuarios =Usuarios
+            Informes =Informes Comerciales (IC)
+            Camaras =Camaras Web (CW)
+            Administracion =Administración de la Intranet (no)
+            Reporte =Consulta Usuarios (no)
+            Sap = Consulta Comerciantes (CC)
+            Notificaciones =Mensaje Pedidos (MP)
+            SeminarioReporte =Reporte de Seminarios (RS)
+            saldos_acum =Saldos Acumulados (SA)
+            env_check =Consulta CheckRegister (CCR)
+            intra_permiso =Vista sin venta, Vista completa,Vista con variables mensuales,Vista de invitado (no)
+            Cuadre_Volumen =Cuadre MCOM, Vista y SAP (CuadreMVS)
+            solicitudes =Solicitud Vacaciones (SV)
+            compra_empleado_gestion =Gestión de Compra Empleado (ACE)
+            compra_empleado_reporte =Compra Empleado (CER)
+        */
+
+        $DicPermisos = [
+            'Camara_Col' => 'CO',
+            'Camara_Mex' => 'MX',
+            'Camara_Pan' => 'PAN',
+            'Camara_Ecu' => 'ECU',
+            'Camara_Per' => 'PR',
+            'Camara_Gtm' => 'GTM',
+            'Camara_Cri' => 'CRI',
+            'Camara_Slv' => 'SAL',
+            'Noticias' => 'News',
+            'Informes' => 'IC',
+            'Camaras' => 'CW',
+            'Sap' => 'CC',
+            'Notificaciones' => 'MP',
+            'SeminarioReporte' => 'RS',
+            'saldos_acum' => 'SA',
+            'env_check' => 'CCR',
+            'Cuadre_Volumen' => 'CuadreMVS',
+            'solicitudes' => 'SV',
+            'compra_empleado_gestion' => 'ACE',
+            'compra_empleado_reporte' => 'CER',
+        ];
+
+        /*
+        VC   =>     Vista completa
+        VSV  =>     Vista sin venta
+        VCVM     =>     Vista con variables mensuales
+        VI   =>     Vista de invitado
+        AI   =>     Administración de la Intranet
+        ACB  =>     Administración de Cuentas Bancarias
+        News     =>     Noticias
+        CU   =>     Control de Usuarios
+        CtrlUsrs     =>     Consulta Usuarios
+        CW   =>     Camaras Web
+        GCE  =>     Gestión de Compra Empleado
+        RE   =>     Reporte de Empleado
+        CO   =>     Colombia
+        MX   =>     M&eacute;xico
+        ECU  =>     Ecuador
+        PAN  =>     Panam&aacute;
+        SAL  =>     Salvador
+        GTM  =>     Guatemala
+        CRI  =>     Costa Rica
+        PR   =>     Per&uacute;
+        IC   =>     Informes Comerciales
+        CC   =>     Consulta Comerciantes
+        MP   =>     Mensaje Pedidos
+        RS   =>     Reporte de Seminarios
+        SA   =>     Saldos Acumulados
+        CCR  =>     Consulta CheckRegister
+        CuadreMVS    =>     Cuadre MCOM, Vista y SAP
+        SV   =>     Solicitud Vacaciones
+        */
 
         $users = array(
             array(
@@ -38807,164 +39033,57 @@ class DashboardController extends Controller
                 'compra_empleado_reporte' => 'No',
             ),
         );
-        
+
         $UserPermission = array();
+        $NewPer = [];
 
-        foreach($permisos as $UserPer){
-            $UserPermission[$UserPer['id_permisos']] = $UserPer;
-        }
-        
-        print_r($UserPermission);exit;
-
-
-        foreach ($users as $user){
-            DB::table('Users')
-                ->where('UserNick', $user['user'])
-                ->update(['password' => bcrypt($user['pass']),'PasswordAltern'=>$this->aes_encrypt($user['pass'])]);
+        $Usuarios = [];
+        foreach ($users as $usuario) {
+            $Usuarios[$usuario['id_users']] = $usuario;
         }
 
-        return "listo";
+        foreach ($permisos as $UserPer) {
+//            $UserPermission[$UserPer['id_permisos']] = $UserPer;
+            foreach ($UserPer as $Per => $value) {
 
-    }
-    function aes_encrypt($String = "")
-    {
+                if ($value === 'Si') {
+                    if (isset($DicPermisos[$Per])) {
+                        $UserPermission[$UserPer['id_permisos']][] = $DicPermisos[$Per];
+                    }
 
-        $plaintext = $String;
-        $password = '}H70 #w3hz+64.b';
-        $method = 'aes-256-cbc';
+                }
+            }
+            if (isset($UserPermission[$UserPer['id_permisos']])) {
+                $NewPer[$UserPer['id_permisos']] = json_encode($UserPermission[$UserPer['id_permisos']]);
+            }
 
-        $password = substr(hash('sha256', $password, true), 0, 32);
 
-        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-
-        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
-
-        return $encrypted;
-
-    }
-    
-    public function _getDashboard()
-    {
-
-        $Dash = DB::select('SELECT * FROM dashboard_users WHERE UserID = ? LIMIT 1', [Auth::user()->UserID]);
-        $Dash = (array)$Dash[0];
-        $Dashboard = json_decode($Dash['UserDashboardSorted']);
-        $Dashboard = (array)$Dashboard;
-//        print_r($Dashboard);exit;
-        if (isset($Dashboard['Left'])) {
-            $DashLeft = $Dashboard['Left'];
-        } else {
-            $DashLeft = "";
         }
-        if (isset($Dashboard['Right'])) {
-            $DashRight = $Dashboard['Right'];
-        } else {
-            $DashRight = "";
+//        print_r($NewPer);exit;
+
+        $i = 0;
+        $j = 0;
+        foreach ($NewPer as $User => $Permissions) {
+            if (isset($Usuarios[$User])) {
+                $UserInfo = $Usuarios[$User];
+//                print_r([$UserInfo['user'] => $Permissions]);
+                DB::table('Users')
+                    ->where('UserNick', $UserInfo['user'])
+                    ->update(['UserPermissions' => $Permissions]);
+                $i++;
+            }
+            else{
+                $j++;
+            }
+
         }
 
-        $now = date("Y-m-d");
-        $NikkenNew = NikkenNew::all()
-            ->where("Cancelled", 0)
-            ->where('ExpireDate', '>=', $now);
 
-        $Events = NikkenCalendar::all()->where("EventStatus", "2")->sortBy('EventDateStart')->toArray();
+//        print_r($NewPer);
 
-        $CalendarEvent = [];
-
-        foreach ($Events as $event) {
-            $CalendarEvent[] = $event['EventDateStart'];
-        }
-
-        $YoutubeVideos = $this->get_videos();
-
-        return view("index", [
-            'Dash' => $Dash,
-            'DashLeft' => $DashLeft,
-            'DashRight' => $DashRight,
-            "News" => $NikkenNew,
-            "Events" => $CalendarEvent,
-            "EventsInfo" => $Events,
-            "YoutubeVideos" => $YoutubeVideos
-        ]);
+        return "listo actualizados: ".$i."  y sin permisos: ".$j;
 
     }
 
-    public function sortDash(Request $request)
-    {
-
-        if (DashboardUser::where('UserID', Auth::user()->UserID)->exists()) {
-
-            DB::table('dashboard_users')
-                ->where('UserID', Auth::user()->UserID)
-                ->update([
-
-                    'UserDashboardSorted' => json_encode($request['Data']),
-                    'LastUpdate' => date('Y-m-d H:i:s'),
-
-                ]);
-
-        } else {
-            // dashboard_users
-            DB::table('dashboard_users')
-                ->insert([
-                    'UserID' => Auth::user()->UserID,
-                    'UserDashboardSorted' => json_encode($request['Data']),
-                ]);
-
-        }
-
-        return $request->all();
-
-    }
-
-    public function usersBirthday(Request $request){
-
-        $file_name = "UsersBirthDay";
-
-        $file = $request->file('FileBirthdayInput');
-
-        $name = $file_name.".jpg";
-        file_put_contents(public_path() . "/img/".$name, file_get_contents($file));
-
-    }
-
-    function get_videos() {
-
-        $playlists = Youtube::getPlaylistsByChannelId('UCMhexgYvMGrrlmH-Xx4TlgA');
-
-        $API_Url = 'https://www.googleapis.com/youtube/v3/';
-        $API_Key = 'AIzaSyDgf_GlwBTqfy2iCQy1uJlfeJ-VYn1YzGw';
-
-        // If you don't know the channel ID see below
-        $channelId = 'UCMhexgYvMGrrlmH-Xx4TlgA';
-
-        $parameter = [
-            'id'=> $channelId,
-            'part'=> 'contentDetails',
-            'key'=> $API_Key
-        ];
-        $channel_URL = $API_Url . 'channels?' . http_build_query($parameter);
-        $json_details = json_decode(file_get_contents($channel_URL), true);
-
-        $playlist = $json_details['items'][0]['contentDetails']['relatedPlaylists']['uploads'];
-
-        $parameter = [
-            'part'=> 'snippet',
-            'playlistId' => $playlist,
-            'maxResults'=> '3',
-            'key'=> $API_Key
-        ];
-        $channel_URL = $API_Url . 'playlistItems?' . http_build_query($parameter);
-        $json_details = json_decode(file_get_contents($channel_URL), true);
-
-        $my_videos = [];
-        foreach($json_details['items'] as $video){
-            //$my_videos[] = $video['snippet']['resourceId']['videoId'];
-            $my_videos[] = array( 'v_id'=>$video['snippet']['resourceId']['videoId'], 'v_name'=>$video['snippet']['title'] );
-        }
-
-        return $my_videos;
-
-    }
 
 }

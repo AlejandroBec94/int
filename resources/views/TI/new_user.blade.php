@@ -220,13 +220,15 @@
                                 <option value="VI">Vista de invitado</option>
                                 <option value="AI">Administración de la Intranet</option>
                                 <option value="ACB">Administración de Cuentas Bancarias</option>
+                                <option value="ACE">Administración de Compra Empleado</option>
+                                <option value="CER">Reporte Compra Empleado</option>
                                 <option value="News">Noticias</option>
                                 <option value="CU">Control de Usuarios</option>
                                 <option value="CtrlUsrs">Consulta Usuarios</option>
                                 <option value="CW">Camaras Web</option>
                                 <option value="GCE">Gestión de Compra Empleado</option>
                                 <option value="RE">Reporte de Empleado</option>
-                                <option value="CP">Colombia</option>
+                                <option value="CO">Colombia</option>
                                 <option value="MX">M&eacute;xico</option>
                                 <option value="ECU">Ecuador</option>
                                 <option value="PAN">Panam&aacute;</option>
