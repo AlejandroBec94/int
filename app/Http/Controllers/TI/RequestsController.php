@@ -207,6 +207,14 @@ class RequestsController extends Controller
 
         $RequestInfo = (array)$RequestInfo;
 
+        if (!$RequestInfo['RequestComment']) {
+            return response()->json([
+                "messages" => 'No existen observaciones.',
+                'type' => "success"
+            ]);
+
+        }
+
         $html = "";
 
         foreach (json_decode($RequestInfo['RequestComment']) as $Comment) {
@@ -220,7 +228,7 @@ class RequestsController extends Controller
                   <span class="direct-chat-timestamp pull-right">' . $Comment['DocDate'] . '</span>
                 </div>
                 <!-- /.direct-chat-info -->
-                <img class="direct-chat-img" src="/images/' . $Comment['UserPhoto'] . '" alt=""><!-- /.direct-chat-img -->
+                <img class="direct-chat-img" src="/fotos_intra/' . $Comment['UserPhoto'] . '" alt=""><!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                 ' . $Comment['UserComment'] . '
                 </div>
@@ -234,7 +242,7 @@ class RequestsController extends Controller
                   <span class="direct-chat-timestamp pull-left">' . $Comment['DocDate'] . '</span>
                 </div>
                 <!-- /.direct-chat-info -->
-                <img class="direct-chat-img" src="/images/' . $Comment['UserPhoto'] . '" alt="Message User Image"><!-- /.direct-chat-img -->
+                <img class="direct-chat-img" src="/fotos_intra/' . $Comment['UserPhoto'] . '" alt="Message User Image"><!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                 ' . $Comment['UserComment'] . '
                 </div>
@@ -275,12 +283,14 @@ class RequestsController extends Controller
         $Comments = json_decode($RequestInfo['RequestComment']);
 
         $CommentsInfo = [];
-        foreach ($Comments as $Comment) {
+        if ($Comments) {
+            foreach ($Comments as $Comment) {
 
-            $Comment = (array)$Comment;
+                $Comment = (array)$Comment;
 
-            $CommentsInfo[] = $Comment;
+                $CommentsInfo[] = $Comment;
 
+            }
         }
 
         $CommentsInfo  [] = ["DocDate" => date("d/m/Y h:i A"), "UserID" => Auth::user()->UserID, "UserName" => Auth::user()->UserName, "UserPhoto" => Auth::user()->UserPhoto, "UserComment" => $request['Observation']];
@@ -297,7 +307,7 @@ class RequestsController extends Controller
                   <span class="direct-chat-timestamp pull-left">' . date("d/m/Y h:i:s A") . '</span>
                 </div>
                 <!-- /.direct-chat-info -->
-                <img class="direct-chat-img" src="/images/' . Auth::user()->UserPhoto . '" alt="Message User Image"><!-- /.direct-chat-img -->
+                <img class="direct-chat-img" src="/fotos_intra/' . Auth::user()->UserPhoto . '" alt="Message User Image"><!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                 ' . $request['Observation'] . '
                 </div>

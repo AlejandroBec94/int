@@ -188,6 +188,8 @@
 
         $(function () {
             $('#Emails').DataTable({
+                'scrollY':        '50vh',
+                'scrollCollapse': true,
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,

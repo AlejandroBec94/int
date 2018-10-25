@@ -54,8 +54,10 @@
     <script>
         $(function () {
             $('#TableArea').DataTable({
-
+                'scrollY':        '50vh',
+                'scrollCollapse': true,
                 'paging': true,
+                'responsive': true,
                 'lengthChange': false,
                 'searching': true,
                 'ordering': true,
