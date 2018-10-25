@@ -1,4 +1,4 @@
-@extends('_layouts.layout')
+@extends('layouts.layout')
 
 @section('TitlePage',"Solicitud de Usuario")
 @section('TitleSubMenu',"Creación")

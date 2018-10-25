@@ -1,5 +1,5 @@
 
-@extends('_layouts.layout')
+@extends('layouts.layout')
 
 @section('MenuHref',"/")
 @section('TitlePage',"Directorio Nikken")
