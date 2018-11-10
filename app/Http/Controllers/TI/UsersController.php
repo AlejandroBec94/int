@@ -84,7 +84,7 @@ class UsersController extends Controller
                 $file = $request->file('FilePhoto');
                 $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
 //                $file->move(public_path() . "/img/", $name);
-                file_put_contents(public_path() . "/images/" . $name, file_get_contents($file));
+                file_put_contents(public_path() . "/fotos_intra/" . $name, file_get_contents($file));
 
             } else {
                 $name = "default.png";
@@ -198,7 +198,7 @@ class UsersController extends Controller
 
             $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
 //                $file->move(public_path() . "/img/", $name);
-            file_put_contents(public_path() . "/images/" . $name, file_get_contents($file));
+            file_put_contents(public_path() . "/fotos_intra/" . $name, file_get_contents($file));
 
         } else {
             $name = "default.png";

@@ -557,9 +557,9 @@
         });
 
         $("#UserImage").on("click",function () {
+
             $("#UserPhoto").trigger("click");
 
-            $(function () {
                 $('#UserPhoto').change(function (e) {
                     addImage(e);
                 });
@@ -580,7 +580,10 @@
                     var result = e.target.result;
                     $('#UserImage').attr("src", result);
                 }
-            });
+
+        });
+
+        $("#UserPhoto").on("change",function () {
 
             var token = "{{ csrf_token() }}";
             event.preventDefault();

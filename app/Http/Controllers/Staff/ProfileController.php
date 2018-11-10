@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Intranet\Http\Controllers\Controller;
 use Intranet\User;
 use \Colors\RandomColor;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -107,10 +108,11 @@ class ProfileController extends Controller
                 ]);
             }
 
-            return $file->getClientOriginalName();
             $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
 //                $file->move(public_path() . "/img/", $name);
-            file_put_contents(public_path() . "/images/" . $name, file_get_contents($file));
+            file_put_contents(public_path() . "/fotos_intra/" . $name, file_get_contents($file));
+
+            DB::update("UPDATE users SET LastUpdate = ?, UserPhoto = ?  where UserID = ?", [date("Y-m-d H:i:s"),$name,Auth::user()->UserID]);
 
         }
     }
