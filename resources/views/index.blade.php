@@ -1100,7 +1100,6 @@
             youtubeReady = true;
         }
 
-
         function onPlayerStateChange(event) {
             var target_control = jQuery(event.target.getIframe()).parent().parent().parent().find(".controls");
 

@@ -87,7 +87,7 @@ body {
 }
 .content-wrapper {
   min-height: 100%;
-  background-color: #ecf0f5;
+  background-color: #1F1F2A;
   z-index: 800;
 }
 .main-footer {
@@ -815,7 +815,7 @@ a:focus {
 }
 .control-sidebar-dark,
 .control-sidebar-dark + .control-sidebar-bg {
-  background: #222d32;
+  background: #1F1F2A;
 }
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs {
   border-bottom: #1c2529;
@@ -842,7 +842,7 @@ a:focus {
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:hover,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:focus,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:active {
-  background: #222d32;
+  background: #1F1F2A;
   color: #fff;
 }
 .control-sidebar-dark .control-sidebar-heading,
@@ -2820,7 +2820,7 @@ table.text-center th {
   bottom: 0;
   height: 250px;
   width: 100%;
-  background: #222d32;
+  background: #1F1F2A;
   color: #fff;
   overflow: auto;
 }

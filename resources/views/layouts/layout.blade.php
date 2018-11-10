@@ -140,6 +140,13 @@
         .modal-card-body {
             overflow: visible !important;
         }*/
+        article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+            margin-top: 5px !IMPORTANT;
+        }
+        .control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg{
+            top:5px;
+        }
+
 
     </style>
     <meta charset="utf-8">
@@ -147,7 +154,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> @yield('title',"Intranet") </title>
-    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}" />
+    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}"/>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -194,7 +201,8 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+{{--TODO change skin with database conf--}}
+<body class="hold-transition {{ Auth::user()->UserSkin }} sidebar-mini">
 <div class="wrapper" style="max-height:100% !IMPORTANT">
 
     <header class="main-header">
@@ -213,238 +221,239 @@
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Navegaci&oacute;n</span>
+                <i class="fas fa-ellipsis-v"></i>
+                <span class="sr-only "> Navegaci&oacute;n</span>
             </a>
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle"
-                                                     alt="User Image">
+                {{--<li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">4</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 4 messages</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <!-- start message -->
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            Support Team
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> 5 mins
+                                            </small>
+                                        </h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user3-128x128.jpg')}}" class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            AdminLTE Design Team
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> 2 hours
+                                            </small>
+                                        </h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user4-128x128.jpg')}}" class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            Developers
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> Today
+                                            </small>
+                                        </h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user3-128x128.jpg')}}" class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            Sales Department
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> Yesterday
+                                            </small>
+                                        </h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user4-128x128.jpg')}}" class="img-circle"
+                                                 alt="User Image">
+                                        </div>
+                                        <h4>
+                                            Reviewers
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> 2 days
+                                            </small>
+                                        </h4>
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">See All Messages</a>
+                        </li>
+                    </ul>
+                </li>--}}
+                <!-- Notifications: style can be found in dropdown.less -->
+                {{--<li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="label label-warning">10</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 10 notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-warning text-yellow"></i> Very long description here that
+                                        may not fit into the page and may cause
+                                        design problems
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users text-red"></i> 5 new members joined
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user text-red"></i> You changed your username
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all</a>
+                        </li>
+                    </ul>
+                </li>--}}
+                <!-- Tasks: style can be found in dropdown.less -->
+                {{--<li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-danger">9</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 9 tasks</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Design some buttons
+                                            <small class="pull-right">20%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <span class="sr-only">20% Complete</span>
                                             </div>
-                                            <h4>
-                                                Support Team
-                                                <small>
-                                                    <i class="fa fa-clock-o"></i> 5 mins
-                                                </small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{asset('img/user3-128x128.jpg')}}" class="img-circle"
-                                                     alt="User Image">
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Create a nice theme
+                                            <small class="pull-right">40%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 40%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <span class="sr-only">40% Complete</span>
                                             </div>
-                                            <h4>
-                                                AdminLTE Design Team
-                                                <small>
-                                                    <i class="fa fa-clock-o"></i> 2 hours
-                                                </small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{asset('img/user4-128x128.jpg')}}" class="img-circle"
-                                                     alt="User Image">
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Some task I need to do
+                                            <small class="pull-right">60%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-red" style="width: 60%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <span class="sr-only">60% Complete</span>
                                             </div>
-                                            <h4>
-                                                Developers
-                                                <small>
-                                                    <i class="fa fa-clock-o"></i> Today
-                                                </small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{asset('img/user3-128x128.jpg')}}" class="img-circle"
-                                                     alt="User Image">
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Make beautiful transitions
+                                            <small class="pull-right">80%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-yellow" style="width: 80%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <span class="sr-only">80% Complete</span>
                                             </div>
-                                            <h4>
-                                                Sales Department
-                                                <small>
-                                                    <i class="fa fa-clock-o"></i> Yesterday
-                                                </small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{asset('img/user4-128x128.jpg')}}" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Reviewers
-                                                <small>
-                                                    <i class="fa fa-clock-o"></i> 2 days
-                                                </small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">See All Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
-                                            may not fit into the page and may cause
-                                            design problems
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-user text-red"></i> You changed your username
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Create a nice theme
-                                                <small class="pull-right">40%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-green" style="width: 40%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">40% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Some task I need to do
-                                                <small class="pull-right">60%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-red" style="width: 60%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">60% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Make beautiful transitions
-                                                <small class="pull-right">80%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">80% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- User Account: style can be found in dropdown.less -->
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all tasks</a>
+                        </li>
+                    </ul>
+                </li>--}}
+                <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{asset('fotos_intra/')}}/{{ Auth::user()->UserPhoto }}" class="user-image"
@@ -479,7 +488,7 @@
                         <!-- Menu Footer-->--}}
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="/profile" class="btn btn-default btn-flat">Perfil</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat" href="{{ route('logout') }}"
@@ -506,14 +515,15 @@
         </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar lazybars-y" style="position:fixed;max-height:100%; overflow-y:auto; "
+    <aside class="main-sidebar lazybars-y"
+           style="margin-top:2%;position:fixed;max-height:100%; overflow-y:auto;border-radius: 50px; "
            data-position="left" data-fade="true" data-offset="-5">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
 
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
+            {{--<form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
@@ -522,11 +532,11 @@
                             </button>
                         </span>
                 </div>
-            </form>
+            </form>--}}
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">Navegaci&oacute;n</li>
+                {{--<li class="header">Navegaci&oacute;n</li>--}}
 
                 <li class="">
                     <a href="/">
@@ -2692,16 +2702,6 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
 
-            <h1>
-                @yield('TitlePage')
-                <small>  @yield('TitleSubMenu') </small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="/"> Home</a>
-                </li>
-                <li class=""><a href="@yield('MenuHref')">@yield('TitlePage')</a></li>
-            </ol>
 
         </section>
 
@@ -2733,7 +2733,7 @@
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark" style="position: fixed;">
+    <aside class="control-sidebar control-sidebar-dark" style="position: fixed;background-color: #1F1F2A;">
 
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
 
@@ -2742,24 +2742,20 @@
                     <i class="fa fa-home"></i>
                 </a>
             </li>
-            <li>
-                <a href="#control-sidebar-settings-tab" data-toggle="tab">
-                    <i class="fa fa-gears"></i>
-                </a>
-            </li>
+
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
             <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
                 <div>
                     <h4 class="control-sidebar-heading">Configuraci&oacute;n de Perfil</h4>
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label class="control-sidebar-subheading">
                             <input type="checkbox" data-controlsidebar="control-sidebar-open" class="pull-right">
                             Barra de Herramientas siempre visible
                         </label>
                         <p>La barra de herramientas estar&aacute; siempre visible en todas las pantallas.</p>
-                    </div>
+                    </div>--}}
                     {{--<div class="form-group">
                         <label class="control-sidebar-subheading">
                             <input type="checkbox" data-layout="layout-boxed" class="pull-right">
@@ -2784,9 +2780,7 @@
                         </label>
                         <p>Toggle between dark and light skins for the right sidebar</p>
                     </div>--}}
-                    <h4 class="control-sidebar-heading">
-                        Skins
-                    </h4>
+
                     <ul class="list-unstyled clearfix" id="skins">
 
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
@@ -2800,7 +2794,7 @@
                                                                                 style="display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span
+                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
@@ -2838,7 +2832,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #222d32">
+                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A">
                                     </span>
                                     <span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7">
                                     </span>
@@ -2858,11 +2852,11 @@
                                                                                  style="display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span
+                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Purple</p></li>
+                            <p class="text-center no-margin">Morado</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-red"
@@ -2874,11 +2868,11 @@
                                                                               style="display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span
+                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Red</p></li>
+                            <p class="text-center no-margin">Rojo</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-yellow"
@@ -2890,11 +2884,11 @@
                                                                                  style="display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span
+                                    <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Yellow</p></li>
+                            <p class="text-center no-margin">Amarillo</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-blue-light"
@@ -2910,7 +2904,7 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Blue Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Azul Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-black-light"
@@ -2926,7 +2920,7 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Black Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Total Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-purple-light"
@@ -2942,7 +2936,7 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Purple Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Morado Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-green-light"
@@ -2958,7 +2952,7 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Green Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Verde Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-red-light"
@@ -2974,7 +2968,7 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Red Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Rojo Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-yellow-light"
@@ -2991,7 +2985,7 @@
                                                                                     </span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Yellow Light</p>
+                            <p class="text-center no-margin" style="font-size: 12px">Amarillo Light</p>
                         </li>
                     </ul>
                 </div>
@@ -3108,75 +3102,6 @@
             <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
             <!-- /.tab-pane -->
             <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
             <!-- /.tab-pane -->
         </div>
     </aside>
@@ -3266,12 +3191,17 @@
 <script>
 
     $('[data-skin]').on('click', function (e) {
-        // alert("hjsdvf")
-        /*        console.log($(this).data('skin'))
-                if ($(this).hasClass('knob'))
-                    return
-                e.preventDefault()
-                changeSkin($(this).data('skin'))*/
+
+        e.preventDefault()
+        var token = "{{ csrf_token() }}";
+
+        $.ajax({
+            url: "{{ url('/changeSkin') }}",
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'POST',
+            data: {'skin': $(this).data('skin')},
+        });
+
     });
 
 

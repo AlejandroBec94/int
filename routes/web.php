@@ -18,6 +18,7 @@
 Auth::routes();
 
 Route::get('/', "DashboardController@getDashboard");
+Route::post('/changeSkin', "DashboardController@changeSkin");
 Route::post('/sortDash', "DashboardController@sortDash");
 Route::post('/usersBirthday', "DashboardController@usersBirthday");
 Route::post('/news/edit','NewsController@editNew');
@@ -26,6 +27,9 @@ Route::post('/news/create','NewsController@createNew');
 
 //View Images
 Route::get('/doc/{document}','Classes\DocumentViewController@image_view');
+
+//profile
+Route::resource('/profile','Staff\ProfileController');
 
 //Directory
 Route::get('/directory/{dir}','RH\DirectoryController@user_directory');

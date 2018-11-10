@@ -97,7 +97,6 @@ class DashboardController extends Controller
         //
     }
 
-
     function aes_encrypt($String = "")
     {
 
@@ -239,6 +238,16 @@ class DashboardController extends Controller
 
         return $my_videos;
 
+    }
+
+    public function changeSkin(Request $request)
+    {
+
+        DB::table('users')
+            ->where('UserID', Auth::user()->UserID)
+            ->update(['UserSkin' => $request->input("skin")]);
+
+        return $request->input("skin");
     }
 
     public function _getDashboard()
@@ -4031,6 +4040,27 @@ class DashboardController extends Controller
                 'confirenvio_role' => NULL,
             ),
         );
+
+        /*Fecha de Ingreso fecha_ingreso*/
+        foreach ($users as $UserInfo) {
+//            print_r($UserInfo['fecha_ingreso']."  ");
+            if ($UserInfo['fecha_ingreso'] > 0) {
+                print_r($UserInfo['user'] . "   ");
+                DB::table('Users')
+                    ->where('UserNick', $UserInfo['user'])
+                    ->update(['DocDate' => $UserInfo['fecha_ingreso']]);
+            } else {
+                DB::table('Users')
+                    ->where('UserNick', $UserInfo['user'])
+                    ->update(['DocDate' => null]);
+            }
+            /*DB::table('Users')
+                ->where('UserNick', $UserInfo['user'])
+                ->update(['DocDate' => $UserInfo['fecha_ingreso']]);*/
+        }
+
+        return "Listo";
+
         $permisos = array(
             array(
                 'Camara_Per' => 'Si',
@@ -39071,8 +39101,7 @@ class DashboardController extends Controller
                     ->where('UserNick', $UserInfo['user'])
                     ->update(['UserPermissions' => $Permissions]);
                 $i++;
-            }
-            else{
+            } else {
                 $j++;
             }
 
@@ -39081,7 +39110,7 @@ class DashboardController extends Controller
 
 //        print_r($NewPer);
 
-        return "listo actualizados: ".$i."  y sin permisos: ".$j;
+        return "listo actualizados: " . $i . "  y sin permisos: " . $j;
 
     }
 
