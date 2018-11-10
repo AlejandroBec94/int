@@ -92,4 +92,27 @@ class ProfileController extends Controller
         //
     }
 
+    public function changeImage(Request $request){
+
+        if ($request->hasFile('UserPhoto')) {
+            $file = $request->file('UserPhoto');
+
+            $ext = explode(".",$file->getClientOriginalName());
+            $ext[1] = strtolower($ext[1]);
+
+            if ($ext[1] != "png" && $ext[1] != "jpg" && $ext[1] != "jpeg"){
+                return response()->json([
+                    "mensaje" => "Extensión no compatible.",
+                    'type' => "error"
+                ]);
+            }
+
+            return $file->getClientOriginalName();
+            $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
+//                $file->move(public_path() . "/img/", $name);
+            file_put_contents(public_path() . "/images/" . $name, file_get_contents($file));
+
+        }
+    }
+
 }

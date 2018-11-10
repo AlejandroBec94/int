@@ -13,9 +13,11 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" style="width: 130px;height: 130px;"
-                         src="{{ asset('fotos_intra/') }}/{{ $UserInfo->UserPhoto }}" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" style="width: 130px;height: 130px; cursor: pointer;"
+                        id="UserImage" src="{{ asset('fotos_intra/') }}/{{ $UserInfo->UserPhoto }}" alt="User profile picture">
 
+                    <input type="file" id="UserPhoto" class="hidden">
+                    
                     <h3 class="profile-username text-center">{{ $UserInfo->UserName }}</h3>
 
                     <p class="text-muted text-center">{{ $UserInfo->UserJobTitle }}</p>
@@ -552,6 +554,62 @@
 
         $("#DataSave").on("click",function () {
             alert("Guardado")
+        });
+
+        $("#UserImage").on("click",function () {
+            $("#UserPhoto").trigger("click");
+
+            $(function () {
+                $('#UserPhoto').change(function (e) {
+                    addImage(e);
+                });
+
+                function addImage(e) {
+                    var file = e.target.files[0],
+                        imageType = /image.*/;
+
+                    if (!file.type.match(imageType))
+                        return;
+
+                    var reader = new FileReader();
+                    reader.onload = fileOnload;
+                    reader.readAsDataURL(file);
+                }
+
+                function fileOnload(e) {
+                    var result = e.target.result;
+                    $('#UserImage').attr("src", result);
+                }
+            });
+
+            var token = "{{ csrf_token() }}";
+            event.preventDefault();
+
+            var file_data = $('#UserPhoto').prop('files')[0];
+            var form_data = new FormData();
+
+            form_data.append('UserPhoto', file_data);
+
+            $.ajax({
+
+                url: "{{ url('/profile/changeImage') }}",
+                headers: {'X-CSRF-TOKEN': token},
+                type: 'POST',
+
+                data: form_data,
+                contentType: false,
+                processData: false,
+
+                success: function (response) {
+
+                    console.log(response)
+                    if (response['type'] == "error") {
+                        swal("Error", response['mensaje'], "error");
+                    }
+
+                }
+
+            });
         });
 
     </script>

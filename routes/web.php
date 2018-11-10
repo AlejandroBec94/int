@@ -30,6 +30,7 @@ Route::get('/doc/{document}','Classes\DocumentViewController@image_view');
 
 //profile
 Route::resource('/profile','Staff\ProfileController');
+Route::post('/profile/changeImage','Staff\ProfileController@changeImage');
 
 //Directory
 Route::get('/directory/{dir}','RH\DirectoryController@user_directory');
