@@ -143,8 +143,9 @@
         article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
             margin-top: 5px !IMPORTANT;
         }
-        .control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg{
-            top:5px;
+
+        .control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg {
+            top: 5px;
         }
 
 
@@ -523,17 +524,17 @@
             <!-- Sidebar user panel -->
 
             <!-- search form -->
-            {{--<form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                </div>
-            </form>--}}
-            <!-- /.search form -->
+        {{--<form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+            </div>
+        </form>--}}
+        <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 {{--<li class="header">Navegaci&oacute;n</li>--}}
@@ -2735,7 +2736,7 @@
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark" style="position: fixed;background-color: #1F1F2A;">
 
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        {{--<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
 
             <li>
                 <a href="#control-sidebar-home-tab" data-toggle="tab">
@@ -2743,11 +2744,36 @@
                 </a>
             </li>
 
-        </ul>
+        </ul>--}}
         <!-- Tab panes -->
         <div class="tab-content">
             <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
                 <div>
+                    <h3 class="control-sidebar-heading">Pr&oacute;ximos</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Alejandro Becerra</h4>
+
+                                    <p>05 Julio</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-hand-holding-heart bg-green"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Aniversario en Nikken</h4>
+
+                                    <p>07 de Marzo del 2019</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
                     <h4 class="control-sidebar-heading">Configuraci&oacute;n de Perfil</h4>
                     {{--<div class="form-group">
                         <label class="control-sidebar-subheading">
@@ -2791,7 +2817,7 @@
                                     class="clearfix full-opacity-hover">
                                 <div><span style="display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-green-active"></span><span class="bg-green"
-                                                                                style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                                style="background-image: linear-gradient(to right, #52c234, #061700);display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
@@ -2807,7 +2833,7 @@
                                 <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix">
                                     <span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe">
                                     </span>
-                                    <span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe">
+                                    <span style="background-image: linear-gradient(to right, #92D5C7, #282D5C);display:block; width: 80%; float: left; height: 7px; background: #fefefe">
                                     </span>
                                 </div>
                                 <div>
@@ -2817,7 +2843,7 @@
                                     </span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Relax</p>
+                            <p class="text-center no-margin">Metallic</p>
                         </li>
 
                         <li style="float:left; width: 33.33333%; padding: 5px;">
@@ -2828,7 +2854,7 @@
                                     <span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9">
                                     </span>
                                     <span class="bg-light-blue"
-                                          style="display:block; width: 80%; float: left; height: 7px;">
+                                          style="    background-image: linear-gradient(to right, #92D5C7, #282D5C);display:block; width: 80%; float: left; height: 7px;">
                                     </span>
                                 </div>
                                 <div>
@@ -2839,7 +2865,7 @@
                                 </div>
                             </a>
                             <p class="text-center no-margin">
-                                Azul
+                                Sky
                             </p>
                         </li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)"
@@ -2847,48 +2873,54 @@
                                                                                    style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                                                                    class="clearfix full-opacity-hover"
                                                                                    id="skin-purple">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="    background-image: linear-gradient(to left, #c31432, #240b36);
+display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-purple-active"></span><span class="bg-purple"
-                                                                                 style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                                 style="    background-image: linear-gradient(to right, #c31432, #240b36);
+display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Morado</p></li>
+                            <p class="text-center no-margin">Cosmic</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-red"
                                     style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                     id="skin-red"
                                     class="clearfix full-opacity-hover">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="    background-image: linear-gradient(to left, #1E9600, #FFF200,#FF0000);
+display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-red-active"></span><span class="bg-red"
-                                                                              style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                              style="    background-image: linear-gradient(to right, #1E9600, #FFF200,#FF0000);
+display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Rojo</p></li>
+                            <p class="text-center no-margin">Rastafari</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-yellow"
                                     style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                     id="skin-yellow"
                                     class="clearfix full-opacity-hover">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="    background-image: linear-gradient(to left, #FF4E50, #F9D423);
+display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-yellow-active"></span><span class="bg-yellow"
-                                                                                 style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                                 style="    background-image: linear-gradient(to right, #FF4E50, #F9D423);
+display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #1F1F2A"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin">Amarillo</p></li>
+                            <p class="text-center no-margin">Citrus</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-blue-light"
@@ -2896,15 +2928,16 @@
                                     id="skin-blue-light"
                                     class="clearfix full-opacity-hover">
                                 <div>
-                                    <span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span
+                                    <span style=" background-image: linear-gradient(to left, #92D5C7, #282D5C);display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span
                                             class="bg-light-blue"
-                                            style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                                            style=" background-image: linear-gradient(to right, #92D5C7, #282D5C);display:block; width: 80%; float: left; height: 7px;"></span>
+                                </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Azul Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Sky Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-black-light"
@@ -2920,55 +2953,57 @@
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Total Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Metallic Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-purple-light"
                                     style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                     id="skin-purple-light"
                                     class="clearfix full-opacity-hover">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="background-image: linear-gradient(to left, #92D5C7, #282D5C);display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-purple-active"></span><span class="bg-purple"
-                                                                                 style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                                 style="background-image: linear-gradient(to right, #92D5C7, #282D5C);display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Morado Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Cosmic Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-green-light"
                                     style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                     id="skin-green-light"
                                     class="clearfix full-opacity-hover">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="    background-image: linear-gradient(to left, #40dcb2, #40dc7e);
+display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-green-active"></span><span class="bg-green"
-                                                                                style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                                style="    background-image: linear-gradient(to right, #40dcb2, #40dc7e);
+display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Verde Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Pacific </p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-red-light"
                                     style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)"
                                     id="skin-red-light"
                                     class="clearfix full-opacity-hover">
-                                <div><span style="display:block; width: 20%; float: left; height: 7px;"
+                                <div><span style="background-image: linear-gradient(to left, #1E9600, #FFF200,#FF0000);display:block; width: 20%; float: left; height: 7px;"
                                            class="bg-red-active"></span><span class="bg-red"
-                                                                              style="display:block; width: 80%; float: left; height: 7px;"></span>
+                                                                              style="background-image: linear-gradient(to right, #1E9600, #FFF200,#FF0000);display:block; width: 80%; float: left; height: 7px;"></span>
                                 </div>
                                 <div>
                                     <span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span
                                             style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Rojo Light</p></li>
+                            <p class="text-center no-margin" style="font-size: 12px">Rastafari Light</p></li>
                         <li style="float:left; width: 33.33333%; padding: 5px;"><a
                                     href="javascript:void(0)"
                                     data-skin="skin-yellow-light"
@@ -2985,7 +3020,7 @@
                                                                                     </span>
                                 </div>
                             </a>
-                            <p class="text-center no-margin" style="font-size: 12px">Amarillo Light</p>
+                            <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
                         </li>
                     </ul>
                 </div>
@@ -2993,110 +3028,6 @@
 
 
             <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
             <!-- /.tab-pane -->
             <!-- Stats tab content -->
             <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
