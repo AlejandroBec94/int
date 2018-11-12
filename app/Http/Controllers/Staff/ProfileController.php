@@ -4,6 +4,7 @@ namespace Intranet\Http\Controllers\Staff;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intranet\Http\Controllers\Classes\LogsController;
 use Intranet\Http\Controllers\Controller;
 use Intranet\User;
 use \Colors\RandomColor;
@@ -119,7 +120,20 @@ class ProfileController extends Controller
 
     public function saveData(Request $request){
 
-        $UserNick  = ($request->input("UserNick"))? $request->input("UserNick"): Auth::user()->UserNick;
+        if ($request->input("UserNick")){
+            LogsController::InsertLog('Change Nick', $request->ip());
+        }
+        if ($request->input("UserSkype")){
+            LogsController::InsertLog('Change Skype', $request->ip());
+        }
+        if ($request->input("UserPhone")){
+            LogsController::InsertLog('Change Phone', $request->ip());
+        }
+        if ($request->input("UserPassword")){
+            LogsController::InsertLog('Change Password', $request->ip());
+        }
+
+        $UserNick  = ($request->input("UserNick"))? $request->input("UserNick") : Auth::user()->UserNick;
         $UserSkype  = ($request->input("UserSkype"))? $request->input("UserSkype") :Auth::user()->UserSkype;
         $UserPhone  = ($request->input("UserPhone"))? $request->input("UserPhone") :Auth::user()->UserPhone;
         $UserPassword  = ($request->input("UserPassword"))? bcrypt($request->input("UserPassword")) : Auth::user()->password;
