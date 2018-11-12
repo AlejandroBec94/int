@@ -553,7 +553,36 @@
     <script>
 
         $("#DataSave").on("click",function () {
-            alert("Guardado")
+            var token = "{{ csrf_token() }}";
+            event.preventDefault();
+
+            var form_data = new FormData();
+
+            form_data.append('UserNick', $("#UserNick").val());
+            form_data.append('UserSkype', $("#UserSkype").val());
+            form_data.append('UserPhone', $("#UserPhone").val());
+            form_data.append('UserPassword', $("#UserPassword").val());
+
+            $.ajax({
+
+                url: "{{ url('/profile/saveData') }}",
+                headers: {'X-CSRF-TOKEN': token},
+                type: 'POST',
+
+                data: form_data,
+                contentType: false,
+                processData: false,
+
+                success: function (response) {
+
+                    console.log(response)
+                    if (response['type'] == "success") {
+                        swal(response['mensaje']," ", "success");
+                    }
+
+                }
+
+            });
         });
 
         $("#UserImage").on("click",function () {

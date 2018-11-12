@@ -117,4 +117,39 @@ class ProfileController extends Controller
         }
     }
 
+    public function saveData(Request $request){
+
+        $UserNick  = ($request->input("UserNick"))? $request->input("UserNick"): Auth::user()->UserNick;
+        $UserSkype  = ($request->input("UserSkype"))? $request->input("UserSkype") :Auth::user()->UserSkype;
+        $UserPhone  = ($request->input("UserPhone"))? $request->input("UserPhone") :Auth::user()->UserPhone;
+        $UserPassword  = ($request->input("UserPassword"))? bcrypt($request->input("UserPassword")) : Auth::user()->password;
+        $UserPassword2  = ($request->input("UserPassword"))? $this->aes_encrypt($request->input("UserPassword")) : Auth::user()->PasswordAltern;
+
+        DB::update("UPDATE users SET LastUpdate = ?, UserNick = ?,UserSkype = ?,UserPhone = ?,password = ?,PasswordAltern = ?  where UserID = ?",
+            [date("Y-m-d H:i:s"),$UserNick,$UserSkype,$UserPhone,$UserPassword,$UserPassword2,Auth::user()->UserID]);
+
+        return response()->json([
+            "mensaje" => "Guardado con exito",
+            'type' => "success"
+        ]);
+
+    }
+
+    function aes_encrypt($String = "")
+    {
+
+        $plaintext = $String;
+        $password = '}H70 #w3hz+64.b';
+        $method = 'aes-256-cbc';
+
+        $password = substr(hash('sha256', $password, true), 0, 32);
+
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+
+        $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
+
+        return $encrypted;
+
+    }
+
 }
