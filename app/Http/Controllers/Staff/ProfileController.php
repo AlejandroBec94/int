@@ -9,6 +9,7 @@ use Intranet\Http\Controllers\Controller;
 use Intranet\User;
 use \Colors\RandomColor;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -27,71 +28,6 @@ class ProfileController extends Controller
     {
         $colors = RandomColor::many(18, array('hue'=>'blue'));
         return view("Staff.profile",['UserInfo'=>Auth::user(),"colors"=>$colors]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function changeImage(Request $request){
@@ -120,6 +56,8 @@ class ProfileController extends Controller
 
     public function saveData(Request $request){
 
+
+
         if ($request->input("UserNick")){
             LogsController::InsertLog('Change Nick', $request->ip());
         }
@@ -130,6 +68,19 @@ class ProfileController extends Controller
             LogsController::InsertLog('Change Phone', $request->ip());
         }
         if ($request->input("UserPassword")){
+
+            $validator = Validator::make($request->all(), [
+                'UserPassword' => 'required|between:4,12|alpha_num|confirmed',
+            ]);
+
+            if($request['UserPassword'] != $request['UserPasswordCheck']){
+                if ($validator->fails()) {
+                    return response()->json([
+                        "mensaje" => "Las contraseñas no coinciden.",
+                        'type' => "error"
+                    ]);
+                }
+            }
             LogsController::InsertLog('Change Password', $request->ip());
         }
 
@@ -143,7 +94,7 @@ class ProfileController extends Controller
             [date("Y-m-d H:i:s"),$UserNick,$UserSkype,$UserPhone,$UserPassword,$UserPassword2,Auth::user()->UserID]);
 
         return response()->json([
-            "mensaje" => "Guardado con exito",
+            "mensaje" => "Guardado con éxito",
             'type' => "success"
         ]);
 

@@ -69,7 +69,7 @@ class AreasController extends Controller
         LogsController::InsertLog('AreaCreate', $request->ip());
 
         return response()->json([
-            "mensaje" => "Guardado con exito",
+            "mensaje" => "Guardado con éxito",
             "type" => "success"
         ]);
 
@@ -126,7 +126,7 @@ class AreasController extends Controller
         LogsController::InsertLog('AreaEdit', $request->ip());
 
         return response()->json([
-            "mensaje" => "Guardado con exito",
+            "mensaje" => "Guardado con éxito",
             "type" => "success",
         ]);
 

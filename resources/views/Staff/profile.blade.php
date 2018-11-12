@@ -527,6 +527,7 @@
 
                                 <div class="col-sm-10 ">
                                     <input type="password" class="form-control" id="UserPasswordCheck" placeholder="***********">
+                                    <span style="color: red">{{ $errors->first("UserPasswordCheck") }}</span>
                                 </div>
 
                             </div>
@@ -562,6 +563,7 @@
             form_data.append('UserSkype', $("#UserSkype").val());
             form_data.append('UserPhone', $("#UserPhone").val());
             form_data.append('UserPassword', $("#UserPassword").val());
+            form_data.append('UserPasswordCheck', $("#UserPasswordCheck").val());
 
             $.ajax({
 
@@ -578,6 +580,10 @@
                     console.log(response)
                     if (response['type'] == "success") {
                         swal(response['mensaje']," ", "success");
+                    }
+
+                    if (response['type'] == "error") {
+                        swal("Error",response['mensaje'], "error");
                     }
 
                 }

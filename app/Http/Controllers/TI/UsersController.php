@@ -130,7 +130,7 @@ class UsersController extends Controller
             );
 
             return response()->json([
-                "mensaje" => "Guardado con exito",
+                "mensaje" => "Guardado con éxito",
                 'type' => "success"
             ]);
 
@@ -272,7 +272,7 @@ class UsersController extends Controller
         LogsController::InsertLog('UserEdit', $request->ip());
 
         return response()->json([
-            "mensaje" => "Guardado con exito",
+            "mensaje" => "Guardado con éxito",
             'type' => "success"
         ]);
 
