@@ -82,7 +82,7 @@ class UsersController extends Controller
 
             if ($request->hasFile('FilePhoto')) {
                 $file = $request->file('FilePhoto');
-                $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
+                $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25) . ".jpg";
 //                $file->move(public_path() . "/img/", $name);
                 file_put_contents(public_path() . "/fotos_intra/" . $name, file_get_contents($file));
 
@@ -113,6 +113,10 @@ class UsersController extends Controller
             $User->UserPhoto = $name;
             $User->save();
             $NewID = DB::getPdo()->lastInsertId();
+
+            //Save in old intranet
+//            Its not require because the new users, only add in a new intranet
+//            $this->update_oldIntra($Permissions);
 
             MailController::LogMail("Usuario Nuevo", 4, 'apps.mail.new_user', $request->all());
             LogsController::InsertLog('UserCreate', $request->ip());
@@ -196,7 +200,7 @@ class UsersController extends Controller
         if ($request->hasFile('FilePhoto')) {
             $file = $request->file('FilePhoto');
 
-            $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25).".jpg";
+            $name = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 25) . ".jpg";
 //                $file->move(public_path() . "/img/", $name);
             file_put_contents(public_path() . "/fotos_intra/" . $name, file_get_contents($file));
 
@@ -260,6 +264,9 @@ class UsersController extends Controller
         // print_r($values);exit;
         DB::update("UPDATE users SET {$values} where UserID = ?", $data);
 
+        //Save in old intranet
+        $this->update_oldIntra($request->input('UserPermissions'));
+
         MailController::LogMail("Usuario Editado", 14, 'apps.mail.edit_user', $request->all());
 
         LogsController::InsertLog('UserEdit', $request->ip());
@@ -269,6 +276,71 @@ class UsersController extends Controller
             'type' => "success"
         ]);
 
+    }
+
+    public function update_oldIntra($Permissions)
+    {
+        $Permissions = (json_decode($Permissions));
+
+        $DicPermisos = [
+            /*'CO' => 'Camara_Col',
+            'MX' => 'Camara_Mex',
+            'PAN' => 'Camara_Pan',
+            'ECU' => 'Camara_Ecu',
+            'PR' => 'Camara_Per',
+            'GTM' => 'Camara_Gtm',
+            'CRI' => 'Camara_Cri',
+            'SAL' => 'Camara_Slv',
+            'News' => 'Noticias',
+            'IC' => 'Informes',
+            'CW' => 'Camaras',
+            'CC' => 'Sap',
+            'MP' => 'Notificaciones',
+            'RS' => 'SeminarioReporte',
+            'SA' => 'saldos_acum',
+            'CCR' => 'env_check',
+            'CuadreMVS' => 'Cuadre_Volumen',
+            'SV' => 'solicitudes',
+            'ACE' => 'compra_empleado_gestion',
+            'CER' => 'compra_empleado_reporte',*/
+            'Camara_Col' => 'CO',
+            'Camara_Mex' => 'MX',
+            'Camara_Pan' => 'PAN',
+            'Camara_Ecu' => 'ECU',
+            'Camara_Per' => 'PR',
+            'Camara_Gtm' => 'GTM',
+            'Camara_Cri' => 'CRI',
+            'Camara_Slv' => 'SAL',
+            'Noticias' => 'News',
+            'Informes' => 'IC',
+            'Camaras' => 'CW',
+            'Sap' => 'CC',
+            'Notificaciones' => 'MP',
+            'SeminarioReporte' => 'RS',
+            'saldos_acum' => 'SA',
+            'env_check' => 'CCR',
+            'Cuadre_Volumen' => 'CuadreMVS',
+            'solicitudes' => 'SV',
+            'compra_empleado_gestion' => 'ACE',
+            'compra_empleado_reporte' => 'CER',
+        ];
+        $values = "";
+        $ii = 0;
+        foreach ($DicPermisos as $key => $permission) {
+
+            if (in_array($permission, $Permissions)) {
+                $values .= $key . " = 'Si',";
+            } else {
+                $values .= $key . " = 'No',";
+            }
+            $ii++;
+
+        }
+
+        $values = rtrim($values, ",");
+        $UserIDOld = DB::connection('mysql2')->table('users')->where('user', Auth::user()->UserNick)->first();
+        $UserIDOld = (array)$UserIDOld;
+        $users = DB::connection('mysql2')->update("UPDATE permisos SET {$values} where id_permisos = ?", [$UserIDOld['id_users']]);
     }
 
     public function getUsers()

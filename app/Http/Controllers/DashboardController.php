@@ -117,6 +117,8 @@ class DashboardController extends Controller
     public function getDashboard()
     {
 
+//        $users = DB::connection('mysql2')->table('permisos')->first();
+//        print_r($users);exit;
         $Dash = DB::select('SELECT * FROM dashboard_users WHERE UserID = ? LIMIT 1', [Auth::user()->UserID]);
         $Dash = (array)$Dash[0];
         $Dashboard = json_decode($Dash['UserDashboardSorted']);
@@ -242,7 +244,6 @@ class DashboardController extends Controller
 
     public function changeSkin(Request $request)
     {
-
         DB::table('users')
             ->where('UserID', Auth::user()->UserID)
             ->update(['UserSkin' => $request->input("skin")]);
