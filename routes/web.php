@@ -37,7 +37,7 @@ Route::post('/profile/saveData','Staff\ProfileController@saveData');
 Route::get('/directory/{dir}','RH\DirectoryController@user_directory');
 
 
-Route::get('/reset_password','Auth\ResetPasswordController@reset_password');
+Route::get('/forgot_password','Auth\ResetPasswordController@forgot_password');
 
 // Usuarios
 Route::resource('/users','TI\UsersController');

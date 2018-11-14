@@ -35,7 +35,7 @@ class LoginController extends Controller
 //        return $request->all();
         // return $this->aes_encrypt($request->password);
 
-        $credentials = array('UserEmail' => $request->email, 'password' => $request->password, "UserStatus" => 1);
+        $credentials = array('UserNick' => $request->UserNick, 'password' => $request->password, "UserStatus" => 1);
 //        print_r(Auth::attempt($credentials, false));exit;
         if (Auth::attempt($credentials, false)) {
 
