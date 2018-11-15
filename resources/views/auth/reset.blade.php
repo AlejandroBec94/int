@@ -45,19 +45,34 @@
              style="max-height: 150px;border-radius: 30px;box-shadow: 2px 2px 15px rgb(70, 66, 66);">
     </div>
     <div class="login-box-body" style="background-color: rgba(255, 255, 255, .75);border-radius:30px;">
-        <p class="login-box-msg">Introduce tu correo Nikken</p>
-
+        <h4 class="login-box-msg">Hola <strong>{{--{{ $DataInfo->UserInfo->UserName }}--}}</strong>, Escoge una nueva contraseña.
+        </h4>
+        <p class="login-box-msg">La contraseña tiene que tener al menos 8 caracteres que incluyan al menos un número o caracter especial.</p>
         <form>
 
             <div class="form-group row">
 
                 <div class="col-md-12">
-                    <input id="email" type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                           name="email" value="{{ old('email') }}" placeholder="jdoe@nikkenlatam.com"
+                    <label for="password">Contraseña nueva*</label>
+                    <input id="password" type="password"
+                           class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                           name="password" value="{{ old('password') }}" placeholder="***********"
                            style="text-align: center"
-                           required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('email'))
+                           required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-md-12">
+                    <label for="password2">Vuelve a escribir tu contraseña*</label>
+                    <input id="password2" type="password"
+                           class="form-control {{ $errors->has('password2') ? ' is-invalid' : '' }}"
+                           name="password2" value="{{ old('password2') }}" placeholder="***********"
+                           style="text-align: center"
+                           required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('password2'))
+                        <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password2') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -87,11 +102,11 @@
         //event.preventDefault();
 
         $.ajax({
-            url: "/forgot_password_send",
+            url: "/reset_password_send",
             headers: {'X-CSRF-TOKEN': token},
             type: 'post',
 
-            data: {"UserEmail": $("#email").val()},
+            data: {"password": $("#password").val(),"password2": $("#password2").val()},
 
             beforeSend: function () {
                 // alert("akus")
@@ -100,8 +115,6 @@
 
                 console.log(response)
                 swal(response['mensaje'], '', response['type']);
-
-                setTimeout(function(){ location.href="/"; }, 500);
 
             }
         });

@@ -38,6 +38,9 @@ Route::get('/directory/{dir}','RH\DirectoryController@user_directory');
 
 
 Route::get('/forgot_password','Auth\ResetPasswordController@forgot_password');
+Route::post('/forgot_password_send','Auth\ResetPasswordController@forgot_password_send');
+Route::get('/reset_password','Auth\ResetPasswordController@reset_password');
+Route::post('/reset_password_send','Auth\ResetPasswordController@reset_password_send');
 
 // Usuarios
 Route::resource('/users','TI\UsersController');
