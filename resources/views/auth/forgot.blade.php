@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login Intranet</title>
+    <title>Olvidé mi contraseña Intranet</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{asset('plugins/bootstrap/dist/css/bootstrap.min.css')}}">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('plugins/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
@@ -44,82 +45,68 @@
              style="max-height: 150px;border-radius: 30px;box-shadow: 2px 2px 15px rgb(70, 66, 66);">
     </div>
     <div class="login-box-body" style="background-color: rgba(255, 255, 255, .75);border-radius:30px;">
-        <p class="login-box-msg">Accede a la Intranet de Nikken Latinoam&eacute;rica</p>
+        <p class="login-box-msg">Introduce tu correo Nikken</p>
 
-        <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-            @csrf
+        <form>
 
             <div class="form-group row">
-                <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Correo') }}</label>
-                <!--
-                <div class="col-md-6">
-                    <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                           name="email" value="{{ old('email') }}"
+
+                <div class="col-md-12">
+                    <input id="email" type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                           name="email" value="{{ old('email') }}" placeholder="jdoe@nikkenlatam.com"
+                           style="text-align: center"
                            required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>-->
-                <div class="col-md-6">
-                    <input id="UserNick" type="text" class="form-control{{ $errors->has('UserNick') ? ' is-invalid' : '' }}"
-                           name="UserNick" value="{{ old('UserNick') }}"
-                           required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('UserNick'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('UserNick') }}</strong>
+                    <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
                 </div>
+
             </div>
 
-            <div class="form-group row">
-                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
+            <input class="btn btn-primary btn-block" style="background-color:#3CB5C2;" id="SendEmail" value="Enviar">
 
-                <div class="col-md-6">
-                    <input id="password" type="password"
-                           class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
-                           required> @if ($errors->has('password'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-6 offset-md-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember"
-                               id="remember" {{ old( 'remember') ? 'checked' : '' }}>
-
-                        <label class="form-check-label" for="remember">
-                            {{ __('Recordar') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row mb-0">
-                <div class="col-md-12 offset-md-4">
-                    <button type="submit" class="btn btn-primary btn-block" style="background-color:#3CB5C2;">
-                        {{ __('Accesar') }}
-                    </button>
-
-                    <a class="btn btn-link" href="/forgot_password">
-                        Olvidé mi contraseña
-                    </a>
-                </div>
-            </div>
         </form>
     </div>
 </div>
 </div>
 </body>
+<script src="{{asset('plugins/jquery/dist/jquery.min.js')}}"></script>
+
+{{-- Sweet Alert --}}
+<link src="https://unpkg.com/sweetalert/dist/sweetalert.min.css"></link>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
     var images = ['background.jpg', 'background2.jpg', 'background3.jpg', 'background4.jpg', 'background6.jpg', 'background7.jpg', 'background8.jpg', 'background9.jpg', 'background10.jpg', 'background11.jpg', 'background12.jpg', 'background13.jpg', 'background14.jpg', 'background15.jpg', 'background16.jpg', 'background17.jpg', 'background18.jpg', 'background19.jpg'];
     document.getElementsByClassName('login-page')[0].style.backgroundImage = 'url({{ asset('img/') }}/' + images[Math.floor(Math.random() * images.length)] + ')';
 
+    $("#SendEmail").on("click", function (event) {
+
+        var token = "{{ csrf_token() }}";
+        //event.preventDefault();
+
+        $.ajax({
+            url: "/forgot_password_send",
+            headers: {'X-CSRF-TOKEN': token},
+            type: 'post',
+
+            data: {"UserEmail": $("#email").val()},
+
+            beforeSend: function () {
+                // alert("akus")
+            },
+            success: function (response) {
+
+                console.log(response)
+                swal(response['mensaje'], '', response['type']);
+
+                setTimeout(function(){ location.href="/"; }, 500);
+
+            }
+        });
+
+    });
 
 </script>
 </html>
