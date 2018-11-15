@@ -373,7 +373,7 @@
                   color: #fff;
                   font-family: Arial;
                   font-size: 15px;">
-                                                                                                                <a href="http://localhost:8000/reset_password?token={{ $token }}"
+                                                                                                                <a href="http://intranet.nikkenlatam.com:1282/reset_password?token={{ $token }}"
                                                                                                                    target="_blank"
                                                                                                                    style="
                    text-align: center;
