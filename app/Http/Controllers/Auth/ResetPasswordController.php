@@ -127,7 +127,8 @@ class ResetPasswordController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|min:6',
+            'password2' => 'required|min:6',
         ]);
 
 
@@ -135,6 +136,13 @@ class ResetPasswordController extends Controller
 //            print_r($validator->errors()->first('password'));
             return response()->json([
                 "mensaje" => $validator->errors()->first('password'),
+                'type' => "error"
+            ]);
+        }
+        if ($request->input("password") != $request->input("password2")) {
+//            print_r($validator->errors()->first('password'));
+            return response()->json([
+                "mensaje" => "La contraseñas no coinciden",
                 'type' => "error"
             ]);
         }
