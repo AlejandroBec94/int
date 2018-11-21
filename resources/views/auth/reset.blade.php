@@ -102,6 +102,7 @@
 
         var token = "{{ csrf_token() }}";
         //event.preventDefault();
+        //$(this).prop("disabled",true);
 
         $.ajax({
             url: "/reset_password_send",
@@ -124,10 +125,12 @@
 
                     setTimeout(function () {
                         location.href = "/";
-                    }, 1000);
+                    }, 6000);
                 }
                 else {
+                    $("#SendEmail").prop("disabled",false);
                     swal(response['mensaje'], '', response['type']);
+
                 }
 
             }

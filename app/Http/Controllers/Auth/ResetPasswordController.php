@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use \Illuminate\Support\Facades\Validator;
+use Intranet\Http\Controllers\Classes\LogsController;
 use Intranet\Http\Controllers\Classes\MailController;
 use Intranet\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -149,9 +150,17 @@ class ResetPasswordController extends Controller
             ]);
         }
 
-        DB::table('users')
+        /*DB::table('users')
             ->where('UserID', $request['UserID'])
-            ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);
+            ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);*/
+
+        $UserInfo = User::where("UserID",$request['UserID'])->first();
+        //print_r($UserInfo['UserNick']);exit;
+
+        $users = DB::connection('mysql2')->update("UPDATE users SET pass = '?' where user = '?'", [$request['password'],$UserInfo['UserNick']]);
+
+        return $users;
+        //LogsController::InsertLog('ResetPassword', $request->ip());
 
         return response()->json([
             "mensaje" => "Se ha cambiado la contraseña con éxito",

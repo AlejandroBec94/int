@@ -119,6 +119,7 @@ class UsersController extends Controller
 //            $this->update_oldIntra($Permissions);
 
             MailController::LogMail("Usuario Nuevo", 4, 'apps.mail.new_user', $request->all());
+
             LogsController::InsertLog('UserCreate', $request->ip());
 
             DB::table('dashboard_users')->insert(
@@ -153,6 +154,7 @@ class UsersController extends Controller
         $UsersInfo = DB::select('SELECT * FROM users WHERE UserID != ?', [$user['UserID']]);
 
         return view("TI.edit_user", ['areas' => $areas, "user" => $user, 'UsersInfo' => $UsersInfo]);
+
     }
 
     /**
@@ -341,6 +343,7 @@ class UsersController extends Controller
         $UserIDOld = DB::connection('mysql2')->table('users')->where('user', Auth::user()->UserNick)->first();
         $UserIDOld = (array)$UserIDOld;
         $users = DB::connection('mysql2')->update("UPDATE permisos SET {$values} where id_permisos = ?", [$UserIDOld['id_users']]);
+
     }
 
     public function getUsers()
@@ -370,21 +373,21 @@ class UsersController extends Controller
 
     }
 
-        function aes_decrypt($Encrypt = "")
-        {
+    function aes_decrypt($Encrypt = "")
+    {
 
-            $password = '}H70 #w3hz+64.b';
-            $method = 'aes-256-cbc';
+        $password = '}H70 #w3hz+64.b';
+        $method = 'aes-256-cbc';
 
-            $password = substr(hash('sha256', $password, true), 0, 32);
+        $password = substr(hash('sha256', $password, true), 0, 32);
 
-            $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+        $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
 
-            $decrypted = openssl_decrypt(base64_decode($Encrypt), $method, $password, OPENSSL_RAW_DATA, $iv);
+        $decrypted = openssl_decrypt(base64_decode($Encrypt), $method, $password, OPENSSL_RAW_DATA, $iv);
 
-            return $decrypted;
+        return $decrypted;
 
-        }
+    }
 
 
     function aes_encrypt($String = "")
