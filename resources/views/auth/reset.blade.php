@@ -102,7 +102,7 @@
 
         var token = "{{ csrf_token() }}";
         //event.preventDefault();
-        //$(this).prop("disabled",true);
+        $(this).prop("disabled",true);
 
         $.ajax({
             url: "/reset_password_send",

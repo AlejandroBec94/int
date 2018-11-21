@@ -150,17 +150,16 @@ class ResetPasswordController extends Controller
             ]);
         }
 
-        /*DB::table('users')
+        DB::table('users')
             ->where('UserID', $request['UserID'])
-            ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);*/
+            ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);
 
         $UserInfo = User::where("UserID",$request['UserID'])->first();
         //print_r($UserInfo['UserNick']);exit;
 
-        $users = DB::connection('mysql2')->update("UPDATE users SET pass = '?' where user = '?'", [$request['password'],$UserInfo['UserNick']]);
+        $users = DB::connection('mysql2')->update("UPDATE users SET pass = ? where user = ?", [$request['password'],$UserInfo['UserNick']]);
 
-        return $users;
-        //LogsController::InsertLog('ResetPassword', $request->ip());
+        LogsController::InsertLog('ResetPassword', $request->ip(),$UserInfo);
 
         return response()->json([
             "mensaje" => "Se ha cambiado la contraseña con éxito",
