@@ -114,7 +114,9 @@ class ResetPasswordController extends Controller
             return redirect('/');
         }
 
-        return view("auth.reset", ["DataInfo" => $Token]);
+        //print_r($Token['UserInfo']);exit;
+        //print_r((array)json_decode($this->aes_decrypt($request['token'])));exit;
+        return view("auth.reset", ["DataInfo" => json_decode($this->aes_decrypt($request['token']))]);
     }
 
     public function reset_password_send(Request $request)
@@ -147,10 +149,18 @@ class ResetPasswordController extends Controller
             ]);
         }
 
+        DB::table('users')
+            ->where('UserID', $request['UserID'])
+            ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);
+
+        return response()->json([
+            "mensaje" => "Se ha cambiado la contraseña con éxito",
+            'type' => "success"
+        ]);
 
     }
 
-    function aes_decrypt($Encrypt = "")
+    function aes_decrypt($Encrypt = "", $Simple = false)
     {
 
         $password = '}H70 #w3hz+64.b';
@@ -160,13 +170,17 @@ class ResetPasswordController extends Controller
 
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
 
-        $decrypted = openssl_decrypt(base64_decode(base64_decode($Encrypt)), $method, $password, OPENSSL_RAW_DATA, $iv);
+        if ($Simple) {
+            $decrypted = openssl_decrypt(base64_decode($Encrypt), $method, $password, OPENSSL_RAW_DATA, $iv);
+        } else {
+            $decrypted = openssl_decrypt(base64_decode(base64_decode($Encrypt)), $method, $password, OPENSSL_RAW_DATA, $iv);
+        }
 
         return $decrypted;
 
     }
 
-    function aes_encrypt($String = "")
+    function aes_encrypt($String = "", $Simple = false)
     {
 
         $plaintext = $String;
@@ -177,7 +191,11 @@ class ResetPasswordController extends Controller
 
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
 
-        $encrypted = base64_encode(base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv)));
+        if ($Simple) {
+            $encrypted = base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv));
+        } else {
+            $encrypted = base64_encode(base64_encode(openssl_encrypt($plaintext, $method, $password, OPENSSL_RAW_DATA, $iv)));
+        }
 
         return $encrypted;
 

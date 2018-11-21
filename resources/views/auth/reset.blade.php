@@ -45,9 +45,11 @@
              style="max-height: 150px;border-radius: 30px;box-shadow: 2px 2px 15px rgb(70, 66, 66);">
     </div>
     <div class="login-box-body" style="background-color: rgba(255, 255, 255, .75);border-radius:30px;">
-        <h4 class="login-box-msg">Hola <strong>{{--{{ $DataInfo->UserInfo->UserName }}--}}</strong>, Escoge una nueva contraseña.
+        <h4 class="login-box-msg">Hola <strong>{{ $DataInfo->UserInfo->UserName }}</strong>, escoge una nueva
+            contraseña.
         </h4>
-        <p class="login-box-msg">La contraseña tiene que tener al menos 8 caracteres que incluyan al menos un número o caracter especial.</p>
+        <p class="login-box-msg">La contraseña tiene que tener al menos 8 caracteres que incluyan al menos un número o
+            caracter especial.</p>
         <form>
 
             <div class="form-group row">
@@ -106,15 +108,27 @@
             headers: {'X-CSRF-TOKEN': token},
             type: 'post',
 
-            data: {"password": $("#password").val(),"password2": $("#password2").val()},
+            data: {
+                "password": $("#password").val(),
+                "password2": $("#password2").val(),
+                "UserID": '{{$DataInfo->UserInfo->UserID}}'
+            },
 
             beforeSend: function () {
                 // alert("akus")
             },
             success: function (response) {
 
-                console.log(response)
-                swal(response['mensaje'], '', response['type']);
+                if (response['type'] == "success") {
+                    swal(response['mensaje'], '', response['type']);
+
+                    setTimeout(function () {
+                        location.href = "/";
+                    }, 1000);
+                }
+                else {
+                    swal(response['mensaje'], '', response['type']);
+                }
 
             }
         });
