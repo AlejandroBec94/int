@@ -59,13 +59,13 @@ class ProfileController extends Controller
 
 
         if ($request->input("UserNick")){
-            LogsController::InsertLog('Change Nick', $request->ip());
+            LogsController::InsertLog('Change Nick', $request->ip(),false);
         }
         if ($request->input("UserSkype")){
-            LogsController::InsertLog('Change Skype', $request->ip());
+            LogsController::InsertLog('Change Skype', $request->ip(),false);
         }
         if ($request->input("UserPhone")){
-            LogsController::InsertLog('Change Phone', $request->ip());
+            LogsController::InsertLog('Change Phone', $request->ip(),false);
         }
         if ($request->input("UserPassword")){
 
@@ -81,7 +81,7 @@ class ProfileController extends Controller
                     ]);
                 }
             }
-            LogsController::InsertLog('Change Password', $request->ip());
+            LogsController::InsertLog('Change Password', $request->ip(),false);
         }
 
         $UserNick  = ($request->input("UserNick"))? $request->input("UserNick") : Auth::user()->UserNick;

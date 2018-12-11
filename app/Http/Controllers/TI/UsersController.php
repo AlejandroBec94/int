@@ -120,7 +120,7 @@ class UsersController extends Controller
 
             MailController::LogMail("Usuario Nuevo", 4, 'apps.mail.new_user', $request->all());
 
-            LogsController::InsertLog('UserCreate', $request->ip());
+            LogsController::InsertLog('UserCreate', $request->ip(),false);
 
             DB::table('dashboard_users')->insert(
                 [
@@ -271,7 +271,7 @@ class UsersController extends Controller
 
         MailController::LogMail("Usuario Editado", 14, 'apps.mail.edit_user', $request->all());
 
-        LogsController::InsertLog('UserEdit', $request->ip());
+        LogsController::InsertLog('UserEdit', $request->ip(),false);
 
         return response()->json([
             "mensaje" => "Guardado con éxito",

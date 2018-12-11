@@ -128,7 +128,7 @@ class RequestsController extends Controller
             }
         }
 
-        LogsController::InsertLog('NewRequestUser', $request->ip());
+        LogsController::InsertLog('NewRequestUser', $request->ip(),false);
 
         return response()->json([
             "mensaje" => "Solicitud Enviada",
@@ -190,7 +190,7 @@ class RequestsController extends Controller
 
         MailController::LogMail("Solicitudes de Usuario", 13, 'apps.mail.edit_status_request_user', $request->all());
 
-        LogsController::InsertLog('RequestUserChangeStatus', $request->ip());
+        LogsController::InsertLog('RequestUserChangeStatus', $request->ip(),false);
 
         return response()->json([
             "mensaje" => "Solicitud Actualizada",

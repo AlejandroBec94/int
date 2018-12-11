@@ -94,7 +94,7 @@ class EmailsController extends Controller
 
         MailController::LogMail("Correos Maestros modificados", 11, 'apps.mail.emails_master', $request->all());
 
-        return LogsController::InsertLog('UpdateEmailsMaster', $request->ip());
+        return LogsController::InsertLog('UpdateEmailsMaster', $request->ip(),false);
 
         // return $request->all();
     }

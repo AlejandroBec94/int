@@ -66,7 +66,7 @@ class AreasController extends Controller
 
         MailController::LogMail("Un Área ha sido creada", 9, 'apps.mail.new_area', $request->all());
 
-        LogsController::InsertLog('AreaCreate', $request->ip());
+        LogsController::InsertLog('AreaCreate', $request->ip(),false);
 
         return response()->json([
             "mensaje" => "Guardado con éxito",
@@ -123,7 +123,7 @@ class AreasController extends Controller
 
         MailController::LogMail("Un Área ha sido modificada", 12, 'apps.mail.edit_area', $request->all());
 
-        LogsController::InsertLog('AreaEdit', $request->ip());
+        LogsController::InsertLog('AreaEdit', $request->ip(),false);
 
         return response()->json([
             "mensaje" => "Guardado con éxito",

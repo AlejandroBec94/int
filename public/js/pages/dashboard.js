@@ -17,13 +17,14 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex              : 999999,
     // Aqui se actualiza el dashboard de la persona
-    update: function(event, ui) {
+      update: function(event, ui) {
 
         var data  = {'Right':$('.SortableRight').sortable('toArray', {attribute: 'id'}),'Left':$('.SortableLeft').sortable('toArray', {attribute: 'id'})};
 
 
         console.log(data);
 
+        return false;
         var tokenL = $("#tokenL").val();
         // dashboard_users
         $.ajax({
