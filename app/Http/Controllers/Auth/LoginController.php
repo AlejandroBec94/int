@@ -32,11 +32,9 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-//        return $request->all();
-        // return $this->aes_encrypt($request->password);
 
         $credentials = array('UserNick' => $request->UserNick, 'password' => $request->password, "UserStatus" => 1);
-//        print_r(Auth::attempt($credentials, false));exit;
+
         if (Auth::attempt($credentials, false)) {
 
             $IpInfo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $request->ip() . '&radius=50'));
@@ -52,6 +50,7 @@ class LoginController extends Controller
                 ],
             ]);
 
+            echo exec("php -f auto_login_intra.php ".$request->UserNick. " ".$request->password);
 
             return redirect()->intended('/');
         } else {
