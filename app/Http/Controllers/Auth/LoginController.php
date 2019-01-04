@@ -50,7 +50,7 @@ class LoginController extends Controller
                 ],
             ]);
 
-            echo exec("php -f auto_login_intra.php ".$request->UserNick. " ".$request->password);
+            exec("php -f auto_login_intra.php ".$request->UserNick. " ".$request->password);
 
             return redirect()->intended('/');
         } else {

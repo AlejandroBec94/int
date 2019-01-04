@@ -46,23 +46,24 @@
     <div class="login-box-body" style="background-color: rgba(255, 255, 255, .75);border-radius:30px;">
         <p class="login-box-msg">Accede a la Intranet de Nikken Latinoam&eacute;rica</p>
 
-        <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+        <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" id="loginForm">
             @csrf
 
             <div class="form-group row">
                 <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Correo') }}</label>
-                <!--
+            <!--
                 <div class="col-md-6">
                     <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                            name="email" value="{{ old('email') }}"
                            required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('email'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
-                </div>-->
+                    </div>-->
                 <div class="col-md-6">
-                    <input id="UserNick" type="text" class="form-control{{ $errors->has('UserNick') ? ' is-invalid' : '' }}"
+                    <input id="UserNick" type="text"
+                           class="form-control{{ $errors->has('UserNick') ? ' is-invalid' : '' }}"
                            name="UserNick" value="{{ old('UserNick') }}"
                            required autofocus style="background-color: !IMPORTANT;"> @if ($errors->has('UserNick'))
                         <span class="invalid-feedback" role="alert">
@@ -101,21 +102,37 @@
 
             <div class="form-group row mb-0">
                 <div class="col-md-12 offset-md-4">
-                    <button type="submit" class="btn btn-primary btn-block" style="background-color:#3CB5C2;">
-                        {{ __('Accesar') }}
+                    <button type="submit" class="btn btn-primary btn-block" id="login"
+                            style="background-color:#3CB5C2;">
+                        <label id="label">{{ __('Accesar') }}</label>
+                        <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+                        {{--<img src="{{asset('images/load.gif')}}">--}}
                     </button>
 
                     <a class="btn btn-link" href="/forgot_password">
                         Olvidé mi contraseña
                     </a>
                 </div>
+
             </div>
         </form>
     </div>
 </div>
 </div>
 </body>
+
+<!-- jQuery 3 -->
+<script src="{{asset('plugins/jquery/dist/jquery.min.js')}}"></script>
 <script>
+
+    $(document).ready(function () {
+        $("#login").on("click", function () {
+            $(this).attr("disabled","disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+            $("#loginForm").submit();
+        });
+    });
 
     var images = ['background.jpg', 'background2.jpg', 'background3.jpg', 'background4.jpg', 'background6.jpg', 'background7.jpg', 'background8.jpg', 'background9.jpg', 'background10.jpg', 'background11.jpg', 'background12.jpg', 'background13.jpg', 'background14.jpg', 'background15.jpg', 'background16.jpg', 'background17.jpg', 'background18.jpg', 'background19.jpg'];
     document.getElementsByClassName('login-page')[0].style.backgroundImage = 'url({{ asset('img/') }}/' + images[Math.floor(Math.random() * images.length)] + ')';

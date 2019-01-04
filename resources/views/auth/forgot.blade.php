@@ -65,6 +65,7 @@
             </div>
 
             <input class="btn btn-primary btn-block" style="background-color:#3CB5C2;" id="SendEmail" value="Enviar">
+            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
 
         </form>
     </div>
@@ -81,7 +82,12 @@
     var images = ['background.jpg', 'background2.jpg', 'background3.jpg', 'background4.jpg', 'background6.jpg', 'background7.jpg', 'background8.jpg', 'background9.jpg', 'background10.jpg', 'background11.jpg', 'background12.jpg', 'background13.jpg', 'background14.jpg', 'background15.jpg', 'background16.jpg', 'background17.jpg', 'background18.jpg', 'background19.jpg'];
     document.getElementsByClassName('login-page')[0].style.backgroundImage = 'url({{ asset('img/') }}/' + images[Math.floor(Math.random() * images.length)] + ')';
 
+
     $("#SendEmail").on("click", function (event) {
+
+        $(this).attr("disabled","disabled");
+        $(this).addClass("hidden");
+        $("#loading").removeClass("hidden");
 
         var token = "{{ csrf_token() }}";
         //event.preventDefault();

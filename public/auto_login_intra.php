@@ -8,7 +8,7 @@
 
 </head>
    <body>
-<iframe src="http://intranet.nikkenlatam.com:8080/intra_test_two/test.html?user=<?php echo $argv[1];?>&pass=<?php echo $argv[2];?>" name="mainFrame" id="mainFrame" title="mainFrame" style="display:none;" />
-</body>
+        <iframe src="http://intranet.nikkenlatam.com:8080/intra_test_two/test.html?user=<?php echo $argv[1];?>&pass=<?php echo $argv[2];?>" name="mainFrame" id="mainFrame" title="mainFrame" style="display:none;" />
+    </body>
 
 </html>
