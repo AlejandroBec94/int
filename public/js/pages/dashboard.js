@@ -21,10 +21,6 @@ $(function () {
 
         var data  = {'Right':$('.SortableRight').sortable('toArray', {attribute: 'id'}),'Left':$('.SortableLeft').sortable('toArray', {attribute: 'id'})};
 
-
-        console.log(data);
-
-        return false;
         var tokenL = $("#tokenL").val();
         // dashboard_users
         $.ajax({

@@ -123,7 +123,6 @@ class DashboardController extends Controller
         $Dash = (array)$Dash[0];
         $Dashboard = json_decode($Dash['UserDashboardSorted']);
         $Dashboard = (array)$Dashboard;
-//        print_r($Dashboard);exit;
         if (isset($Dashboard['Left'])) {
             $DashLeft = $Dashboard['Left'];
         } else {
