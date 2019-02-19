@@ -26,7 +26,7 @@
                             <label for="UserStatus"></label>
                         </div>
                         <img class="profile-user-img img-responsive img-circle" style="cursor:pointer;" id="UserPhoto"
-                             src="{{ asset('fotos_intra/default.png') }}" alt="User profile picture">
+                             src="{{ asset('fotos_intra/Foto_default.jpg') }}" alt="User profile picture">
                         <input type="file" class="hidden" id="FilePhoto" name="FilePhoto">
 
                         <br>
