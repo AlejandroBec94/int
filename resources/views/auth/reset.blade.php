@@ -84,7 +84,7 @@
             <!--<input class="btn btn-primary btn-block" style="background-color:#3CB5C2;" id="SendEmail" value="Enviar">-->
             <button type="submit" class="btn btn-primary btn-block" id="SendEmail"
                     style="background-color:#3CB5C2;">
-                <label id="label">{{ __('Accesar') }}</label>
+                <label id="label">{{ __('Reset D:') }}</label>
                 <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
                 {{--<img src="{{asset('images/load.gif')}}">--}}
             </button>

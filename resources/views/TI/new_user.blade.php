@@ -102,7 +102,9 @@
                             </li>
                         </ul>
 
-                        <button type="submit" class="btn btn-primary btn-block" id="SaveUser"><b>Crear Usuario</b>
+                        <button type="submit" class="btn btn-primary btn-block" id="SaveUser">
+                            <label id="label">{{ __('Aceptar') }}</label>
+                            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
                         </button>
 
                     </div>
@@ -351,9 +353,15 @@
 
         $("#SaveUser").on("click", function (e) {
 
+            $(this).attr("disabled","disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+
             if ($("#UserPassword").val() != $("#UserPassword2").val() || $("#UserPassword").val() == '') {
                 swal("Contraseñas no coinciden", "Verifique nuevamente las contraseñas.", "warning");
-
+                $("#SaveUser").attr("disabled",false);
+                $("#label").removeClass("hidden");
+                $("#loading").addClass("hidden");
                 return false;
             }
 
@@ -388,7 +396,7 @@
                 processData: false,
 
                 beforeSend: function () {
-                    // alert("akus")
+                  
                 },
                 success: function (response) {
 
@@ -397,9 +405,18 @@
                     if (response['type'] == "success") {
                         location.href = "/users";
                     }
+                    else{
+
+                        $("#SaveUser").attr("disabled",false);
+                        $("#label").removeClass("hidden");
+                        $("#loading").addClass("hidden");
+
+                    }
 
                 }
             });
+
+
 
         });
 
