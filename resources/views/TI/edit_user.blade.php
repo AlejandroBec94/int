@@ -109,8 +109,14 @@
                             </li>
                         </ul>
 
-                        <button type="submit" class="btn btn-primary btn-block" id="SaveUser"><b>Editar Usuario</b>
+                        <button type="submit" class="btn btn-primary btn-block" id="SaveUser">
+
+                            <label id="label">{{ __('Editar Usuario') }}</label>
+                            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+
                         </button>
+
+
 
                     </div>
                     <!-- /.box-body -->
@@ -373,10 +379,16 @@
 
             e.preventDefault();
 
+            $(this).attr("disabled","disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+
             if ($("#UserPassword").val() != '') {
                 if ($("#UserPassword").val() != $("#UserPassword2").val() || $("#UserPassword").val() == '') {
                     swal("Contraseñas no coinciden", "Verifique nuevamente las contraseñas.", "warning");
-
+                    $("#SaveUser").attr("disabled",false);
+                    $("#label").removeClass("hidden");
+                    $("#loading").addClass("hidden");
                     return false;
                 }
             }
@@ -419,6 +431,9 @@
 
                     console.log(response)
                     swal(response['mensaje'], '', response['type']);
+                    $("#SaveUser").attr("disabled",false);
+                    $("#label").removeClass("hidden");
+                    $("#loading").addClass("hidden");
 
                 }
             });

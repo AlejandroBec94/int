@@ -79,8 +79,14 @@
                             </li>
                         </ul>
                         {{-- <a class="btn btn-primary btn-block" href="/mail/1">Enviar Solicitud</a> --}}
-                        <a class="btn btn-primary btn-block" href="javascript:void(0);" id="UserSave">Enviar
-                            Solicitud</a>
+                        <a class="btn btn-primary btn-block" href="javascript:void(0);" id="UserSave">
+
+                            <label id="label">{{ __('Aceptar') }}</label>
+                            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+
+                        </a>
+
+
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -226,6 +232,10 @@
 
             e.preventDefault();
 
+            $(this).attr("disabled", "disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+
             var form_data = [];
 
             form_data = {
@@ -262,6 +272,11 @@
                     swal(response['mensaje'], '', response['type']);
                     if (response['type'] == "success") {
                         location.href = "/requests";
+                    }
+                    else{
+                        $("#UserSave").attr("disabled", false);
+                        $("#label").removeClass("hidden");
+                        $("#loading").addClass("hidden");
                     }
 
                 }

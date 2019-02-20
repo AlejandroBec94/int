@@ -104,7 +104,10 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary pull-right" id="SaveArea">Guardar</button>
+                        <button type="submit" class="btn btn-primary pull-right" id="SaveArea">
+                            <label id="label">{{ __('Aceptar') }}</label>
+                            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+                        </button>
 
                     </div>
                     <!-- /.box-body -->
@@ -135,6 +138,10 @@
 
             event.preventDefault();
 
+            $(this).attr("disabled", "disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+
             var form_data = new FormData();
 
             form_data.append('AreaPermissions', JSON.stringify($("#AreaPermissions").val()));
@@ -159,9 +166,16 @@
                 },
                 success: function (response) {
 
-                    // console.log(response)
+                    console.log(response)
                     swal(response['mensaje'], '', response['type']);
-                    location.href = "/areas";
+                    if (response['type'] == "error") {
+                        $("#SaveArea").attr("disabled", false);
+                        $("#label").removeClass("hidden");
+                        $("#loading").addClass("hidden");
+                    }
+                    else {
+                        location.href = "/areas";
+                    }
 
                 }
             });

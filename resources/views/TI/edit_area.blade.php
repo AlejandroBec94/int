@@ -106,7 +106,13 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary pull-right" id="SaveArea">Guardar</button>
+                        <button type="submit" class="btn btn-primary pull-right" id="SaveArea">
+
+                            <label id="label">{{ __('Aceptar') }}</label>
+                            <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+
+
+                        </button>
 
                     </div>
                     <!-- /.box-body -->
@@ -143,6 +149,10 @@
 
             e.preventDefault();
 
+            $(this).attr("disabled","disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
+
             var form_data = [];
 
             form_data = {
@@ -169,6 +179,9 @@
 
                     console.log(response)
                     swal(response['mensaje'], '', response['type']);
+                    $(this).attr("disabled",false);
+                    $("#label").removeClass("hidden");
+                    $("#loading").addClass("hidden");
 
                 }
             });
