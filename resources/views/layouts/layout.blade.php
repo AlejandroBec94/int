@@ -2736,16 +2736,16 @@
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark" style="position: fixed;background-color: #1F1F2A;">
 
-        {{--<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+    {{--<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
 
-            <li>
-                <a href="#control-sidebar-home-tab" data-toggle="tab">
-                    <i class="fa fa-home"></i>
-                </a>
-            </li>
+        <li>
+            <a href="#control-sidebar-home-tab" data-toggle="tab">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
 
-        </ul>--}}
-        <!-- Tab panes -->
+    </ul>--}}
+    <!-- Tab panes -->
         <div class="tab-content">
             <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
                 <div>
