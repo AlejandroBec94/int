@@ -2758,7 +2758,8 @@
                                 <div class="menu-info">
                                     <h4 class="control-sidebar-subheading">Alejandro Becerra</h4>
 
-                                    <p>05 Julio</p>
+                                    <p>{{ date("l d F",strtotime(date("m-d",strtotime(Auth::user()->UserBorn)).date("-Y"))) }}</p>
+
                                 </div>
                             </a>
                         </li>
@@ -2768,8 +2769,7 @@
 
                                 <div class="menu-info">
                                     <h4 class="control-sidebar-subheading">Aniversario en Nikken</h4>
-
-                                    <p>07 de Marzo del 2019</p>
+                                    <p>{{ date("l d F",strtotime(date("m-d",strtotime(Auth::user()->DocDate)).date("-Y"))) }}</p>
                                 </div>
                             </a>
                         </li>

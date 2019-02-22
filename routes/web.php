@@ -40,6 +40,7 @@ Route::get('/directory/{dir}','RH\DirectoryController@user_directory');
 Route::get('/forgot_password','Auth\ResetPasswordController@forgot_password');
 Route::post('/forgot_password_send','Auth\ResetPasswordController@forgot_password_send');
 Route::get('/reset_password','Auth\ResetPasswordController@reset_password');
+
 Route::post('/reset_password_send','Auth\ResetPasswordController@reset_password_send');
 
 // Usuarios
@@ -86,3 +87,14 @@ Route::get('/area/new',function(){
 Route::get('/youtube',array('uses' => 'YoutubeController@index', 'as' => 'youtube'));
 Route::post('/youtube',array('uses' => 'YoutubeController@search', 'as' => 'youtube.search'));
 
+Route::get('/imagess',function (){
+    header("Content-type: image/png");
+    $cadena = "jasdhsa";
+    $im     = imagecreatefrompng("img/photo2.png");
+    $naranja = imagecolorallocate($im, 233, 22, 60);
+
+    $px     = (imagesx($im) - 7.5 * strlen($cadena)) / 2;
+    imagestring($im, 300, $px, 90, $cadena, $naranja);
+    imagepng($im);
+    imagedestroy($im);
+});

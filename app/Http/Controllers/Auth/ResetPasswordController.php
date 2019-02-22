@@ -151,6 +151,7 @@ class ResetPasswordController extends Controller
         }
 
         DB::table('users')
+
             ->where('UserID', $request['UserID'])
             ->update(['remember_token' => "","password"=>bcrypt($request->input("password")),"PasswordAltern"=>$this->aes_encrypt($request->input("password",true))]);
 

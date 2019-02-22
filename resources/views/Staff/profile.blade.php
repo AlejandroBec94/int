@@ -517,7 +517,7 @@
                                 <label for="UserPassword" class="col-sm-2 control-label">Contrase&ntilde;a</label>
 
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="UserPassword" placeholder="***********">
+                                    <input type="password" autocomplete="false" class="form-control" id="UserPassword" placeholder="***********">
                                 </div>
 
                             </div>
@@ -526,7 +526,7 @@
                                 <div  class="col-sm-2"></div>
 
                                 <div class="col-sm-10 ">
-                                    <input type="password" class="form-control" id="UserPasswordCheck" placeholder="***********">
+                                    <input type="password" class="form-control" autocomplete="false" id="UserPasswordCheck" placeholder="***********">
                                     <span style="color: red">{{ $errors->first("UserPasswordCheck") }}</span>
                                 </div>
 
@@ -534,7 +534,12 @@
 
                             <div class="form-group ">
                                 <div class="col-sm-offset-2 col-sm-10 ">
-                                    <button id="DataSave" class="btn btn-info ">Guardar</button>
+                                    <button id="DataSave" class="btn btn-info ">
+
+                                        <label id="label">{{ __('Aceptar') }}</label>
+                                        <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">
+
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -556,6 +561,10 @@
         $("#DataSave").on("click",function () {
             var token = "{{ csrf_token() }}";
             event.preventDefault();
+
+            $(this).attr("disabled", "disabled");
+            $("#label").addClass("hidden");
+            $("#loading").removeClass("hidden");
 
             var form_data = new FormData();
 
@@ -585,6 +594,9 @@
                     if (response['type'] == "error") {
                         swal("Error",response['mensaje'], "error");
                     }
+                    $("#DataSave").attr("disabled", false);
+                    $("#label").removeClass("hidden");
+                    $("#loading").addClass("hidden");
 
                 }
 

@@ -1,0 +1,57 @@
+[1mdiff --git a/resources/views/Staff/profile.blade.php b/resources/views/Staff/profile.blade.php[m
+[1mindex bbc4d22..9917387 100644[m
+[1m--- a/resources/views/Staff/profile.blade.php[m
+[1m+++ b/resources/views/Staff/profile.blade.php[m
+[36m@@ -517,7 +517,7 @@[m
+                                 <label for="UserPassword" class="col-sm-2 control-label">Contrase&ntilde;a</label>[m
+ [m
+                                 <div class="col-sm-10">[m
+[31m-                                    <input type="password" class="form-control" id="UserPassword" placeholder="***********">[m
+[32m+[m[32m                                    <input type="password" autocomplete="false" class="form-control" id="UserPassword" placeholder="***********">[m
+                                 </div>[m
+ [m
+                             </div>[m
+[36m@@ -526,7 +526,7 @@[m
+                                 <div  class="col-sm-2"></div>[m
+ [m
+                                 <div class="col-sm-10 ">[m
+[31m-                                    <input type="password" class="form-control" id="UserPasswordCheck" placeholder="***********">[m
+[32m+[m[32m                                    <input type="password" class="form-control" autocomplete="false" id="UserPasswordCheck" placeholder="***********">[m
+                                     <span style="color: red">{{ $errors->first("UserPasswordCheck") }}</span>[m
+                                 </div>[m
+ [m
+[36m@@ -534,7 +534,12 @@[m
+ [m
+                             <div class="form-group ">[m
+                                 <div class="col-sm-offset-2 col-sm-10 ">[m
+[31m-                                    <button id="DataSave" class="btn btn-info ">Guardar</button>[m
+[32m+[m[32m                                    <button id="DataSave" class="btn btn-info ">[m
+[32m+[m
+[32m+[m[32m                                        <label id="label">{{ __('Aceptar') }}</label>[m
+[32m+[m[32m                                        <img src="{{asset('images/load.gif')}}" style="width:30px;" id="loading" class="hidden">[m
+[32m+[m
+[32m+[m[32m                                    </button>[m
+                                 </div>[m
+                             </div>[m
+                         </form>[m
+[36m@@ -557,6 +562,10 @@[m
+             var token = "{{ csrf_token() }}";[m
+             event.preventDefault();[m
+ [m
+[32m+[m[32m            $(this).attr("disabled", "disabled");[m
+[32m+[m[32m            $("#label").addClass("hidden");[m
+[32m+[m[32m            $("#loading").removeClass("hidden");[m
+[32m+[m
+             var form_data = new FormData();[m
+ [m
+             form_data.append('UserNick', $("#UserNick").val());[m
+[36m@@ -585,6 +594,9 @@[m
+                     if (response['type'] == "error") {[m
+                         swal("Error",response['mensaje'], "error");[m
+                     }[m
+[32m+[m[32m                    $("#DataSave").attr("disabled", false);[m
+[32m+[m[32m                    $("#label").removeClass("hidden");[m
+[32m+[m[32m                    $("#loading").addClass("hidden");[m
+ [m
+                 }[m
+ [m
